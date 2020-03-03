@@ -1,0 +1,27 @@
+.col {
+    display: inline-block;
+    width: 70px;
+    background-color: blue;
+}
+
+.col:hover {
+    background-color: rgba(0, 0, 255, 0.61);
+    cursor: pointer;
+}
+
+.row {
+    height: 60px;
+    width: 60px;
+    display: block;
+    font-size: 3rem;
+    border-radius: 50%;
+    border: solid black 1px;
+    margin: 7px 2px;
+    background-color: white;
+}
+
+/* .active {
+    background-color: red;
+    transform: translateY(-10px);
+    transition: 2s;
+} */
