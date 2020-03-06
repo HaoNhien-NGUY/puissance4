@@ -270,7 +270,7 @@ $.fn.puissance4 = function (options) {
             this.state = state;
             if (state == 0) {
                 this.cell.removeClass('minglee').removeClass('pepega');
-                this.cell.css({ "transform": "translateY(" + this.translateY + "px)", "opacity": "0" , "transition" : "transform 0.4s ease-in"});
+                this.cell.css({ "transform": "translateY(" + this.translateY + "px)", "opacity": "0", "transition": "transform 0.4s ease-in" });
             }
             else if (state == 1) {
                 this.cell.addClass('pepega').removeClass('minglee');
@@ -294,14 +294,16 @@ $.fn.puissance4 = function (options) {
         }
 
         animate(col, row, player) {
-            board.array[col][row].cell.css({ "transform": "translateY(0px)", "opacity": "1" });
-            setTimeout(() => {
-                board.array[col][row].cell.css({ "transform": "translateY(-6px)", "transition": "transform 0.1s ease-out" });
-                setTimeout(() => {
-                    board.array[col][row].cell.css({ "transform": "translateY(0px)"});
-                }, 110);
-            }, 460);
             board.array[col][row].changeState(player.id);
+            board.array[col][row].cell.css({ "transform": "translateY(0px)", "opacity": "1" });
+            board.array[col][row].cell.on("transitionend", function () {
+                $(this).css({ "transform": "translateY(-6px)", "transition": "transform 0.1s ease" });
+                $(this).unbind("transitionend");
+                $(this).on("transitionend", function () {
+                    board.array[col][row].cell.css({ "transform": "translateY(0px)" });
+                    $(this).unbind("transitionend");
+                })
+            });
         }
     }
 
