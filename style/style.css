@@ -20,24 +20,52 @@ body {
     font-family: 'Press Start 2P', cursive;
     font-size: 3.8rem;
     text-shadow: rgb(0, 0, 0) 1px 0 20px;
-    padding-top: 60px;
+    padding-top: 70px;
 }
 
-.setting-form{
+.setting-form {
     background-color: rgba(0, 0, 0, 0.849);
-    width: 30%;
+    width: 25%;
     margin: 0 auto;
     color: white;
+    top: 80px;
+    position: relative;
+    border-radius: 10px;
+    transition: 0.2s;
+}
+
+.main-btn {
+    padding: 30px;
+}
+
+.main-btn button {
+    height: 60px;
+    display: block;
+    width: 50%;
+    margin: 20px auto;
+    cursor: pointer;
+    background-color: #4aff3b;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Press Start 2P', cursive;
+    color: white;
+    transition: 0.2s;
+}
+
+.main-btn button:hover {
+    background-color: #3dc731;
+    transition: 0.2s;
 }
 
 #borderboard {
-    padding: 15px;
+    padding: 0 15px;
     /* background-color: slateblue; */
     background-color: #757575;
     border-radius: 20px;
 }
 
 .col {
+    padding: 15px 0;
     display: inline-block;
     background-color: #757575;
     /* background-color: slateblue; */
@@ -49,20 +77,6 @@ body {
     ;
     cursor: pointer;
 }
-
-/* .row {
-    height: 80px;
-    width: 80px;
-    display: block;
-    font-size: 3rem;
-    border-radius: 50%;
-    border: solid black 2px;
-    margin: 6px 4px;
-    background-color: white;
-    transition: transform 0.4s;
-    transition-timing-function: ease-in;
-    opacity: 0;
-} */
 
 .row {
     height: 80px;
@@ -93,7 +107,6 @@ body {
     /* border: 1px solid black; */
 }
 
-
 .phcol {
     opacity: 0;
     border: solid black 2px;
@@ -101,6 +114,9 @@ body {
     height: 80px;
     width: 80px;
     margin: 4px 4px;
+    background-image: url('./../img/pepeS.gif');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 
 .active {
@@ -125,7 +141,7 @@ body {
     cursor: pointer;
 }
 
-.backborder{
+.backborder {
     background-color: slategrey;
 }
 
@@ -135,6 +151,7 @@ body {
     font-family: 'Press Start 2P', cursive;
     /* text-shadow: 2px 2px 8px rgb(99, 99, 99); */
     text-shadow: 2px 2px 4px slateblue;
+    transition: 0.2s;
 }
 
 .pscore {
@@ -143,4 +160,57 @@ body {
     /* font-family: 'Muli', sans-serif; */
     font-family: 'Press Start 2P', cursive;
     color: white;
+}
+
+#reset-btn {
+    display: block;
+    margin: 30px auto;
+    width: 250px;
+    height: 40px;
+    background-color: black;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+    position: relative;
+}
+
+#reset-btn:hover {
+    transition: 0.2s;
+    top: -2px;
+    left: -1px;
+}
+
+#game-settings h3 {
+    font-family: 'Press Start 2P', cursive;
+}
+
+.settings-div {
+    display: flex;
+}
+
+.grid-settings {
+    margin: 40px 0;
+    padding-right: 180px;
+}
+
+#game-settings {
+    display: none;
+    padding: 20px;
+}
+
+#game-settings .settings-div input {
+    max-width: 200px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.grid-settings input {
+    width: 50px;
+    margin-left: auto;
+}
+
+#settings-save {
+    display: block;
+    margin: 0 auto;
 }

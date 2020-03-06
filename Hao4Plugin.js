@@ -1,13 +1,13 @@
 jQuery(document).ready(function () {
 
-    settings = {};
+    let settings = {};
 
     $('#settings-p1name').on('click', function () {
         $(this).val('');
-    })
+    });
     $('#settings-p2name').on('click', function () {
         $(this).val('');
-    })
+    });
     $('#settings-save').on('click', function () {
         settings = {
             P1name: $('#settings-p1name').val(),
@@ -16,10 +16,23 @@ jQuery(document).ready(function () {
             gridX: $('#settings-cols').val(),
             gridY: $('#settings-rows').val()
         }
+        $('#game-settings').toggle();
+        $('#main-menu').toggle();
+
     });
-    $('#settings-save').on('click', function () {
+    $('#btn-1-player').on('click', function () {
+        settings.ai = 1;
         $('#game-area').puissance4(settings);
         $('#welcome-page').slideToggle();
+    });
+    $('#btn-2-player').on('click', function () {
+        $('#game-area').puissance4(settings);
+        $('#welcome-page').slideToggle();
+    });
+
+    $('#btn-settings').on('click', function () {
+        $('#main-menu').toggle();
+        $('#game-settings').toggle();
     });
 });
 
@@ -62,17 +75,20 @@ $.fn.puissance4 = function (options) {
             this.score = 0;
         }
 
-        addPon(col, PHcol) {
+        addPon(col) {
             let i = 0;
             while (typeof board.array[col][i] !== 'undefined' && board.array[col][i].state != 0) {
                 i++;
             }
             if (i != (board.gridY)) {
                 board.display.animate(col, i, this);
-                // board.array[col][i].changeState(this.id);
                 board.winCheck(col, i, this);
                 board.changePlayer();
             }
+        }
+
+        calculateCol() {
+            this.addPon(Math.floor(Math.random() * (board.gridX - 1)));
         }
     };
 
@@ -108,6 +124,11 @@ $.fn.puissance4 = function (options) {
 
                 col.on('click', function () {
                     board.currentPLayer.addPon(i);
+                    if (settings.ai) {
+                        setTimeout(() => {
+                            board.currentPLayer.calculateCol();
+                        }, 500);
+                    }
                 });
 
                 col.on('mouseover', function () {
@@ -127,18 +148,19 @@ $.fn.puissance4 = function (options) {
                 this.array[i].reverse();
                 borderboard.append(col);
             }
+            $(gamediv).append('<button id="reset-btn">Reset / Change player</button>');
 
-            $('.phcol').css('background-color', colorP1);
+            $('.phcol').css('background-color', colorP1);//.addClass('pepega');
         }
 
         changePlayer() {
             if (this.currentPLayer == player1) {
                 this.currentPLayer = player2;
-                $('.phcol').css('background-color', colorP2).addClass('minglee').removeClass('pepega');
+                $('.phcol').css('background-color', colorP2);//.addClass('minglee').removeClass('pepega');
                 this.display.showCurrentPlayer(this.currentPLayer);
             } else {
                 this.currentPLayer = player1;
-                $('.phcol').css('background-color', colorP1).addClass('pepega').removeClass('minglee');
+                $('.phcol').css('background-color', colorP1);//.addClass('pepega').removeClass('minglee');
                 this.display.showCurrentPlayer(this.currentPLayer);
             }
         }
@@ -164,6 +186,15 @@ $.fn.puissance4 = function (options) {
                 alert(player.name + " WINS !");
                 player.score++;
                 this.display.updateScore(player);
+                this.resetBoard();
+            }
+            if (row == (this.gridY - 1)) {
+                for (let i = 0; i < (this.gridY); i++) {
+                    if (this.array[i][row].state == 0) {
+                        return false;
+                    }
+                }
+                alert('No winner');
                 this.resetBoard();
             }
         }
@@ -199,7 +230,6 @@ $.fn.puissance4 = function (options) {
                     y++;
                 }
             }
-
             if (startRight[0] > 2 && (startRight[1] + 3) < (this.gridY)) {
                 let y = startRight[1];
                 for (let i = startRight[0]; i > 2 && (y + 3) < (this.gridY); i--) {
@@ -228,8 +258,7 @@ $.fn.puissance4 = function (options) {
             this.state = state;
             if (state == 0) {
                 this.cell.remove('minglee').removeClass('pepega');
-                this.cell.css({"transform": "translateY("+this.translateY+"px)", "opacity": "0"});
-                //.css('transform', 'translateY('++'px);
+                this.cell.css({ "transform": "translateY(" + this.translateY + "px)", "opacity": "0" });
             }
             else if (state == 1) {
                 this.cell.addClass('pepega').removeClass('minglee');
@@ -240,8 +269,6 @@ $.fn.puissance4 = function (options) {
             }
             board.playhistory = this;
         }
-
-
     }
 
     //------------display----------------//
@@ -252,14 +279,30 @@ $.fn.puissance4 = function (options) {
 
         showCurrentPlayer(player) {
             $('#currentplayer').html("<b>" + player.name + "</b> 's turn.").css('color', player.color);
-
         }
 
         animate(col, row, player) {
-            board.array[col][row].cell.css({"transform": "translateY(0px)", "opacity": "1"});
+            board.array[col][row].cell.css({ "transform": "translateY(0px)", "opacity": "1" });
             board.array[col][row].changeState(player.id);
         }
     }
+
+    var player1 = new player(settings.P1name, colorP1);
+    var player2 = new player(settings.P2name, colorP2);
+
+
+    var board = new gameBoard(gridX, gridY, player1);
+
+    board.createBoard(this);
+
+    $('.scoreboard').on('click', function () {
+        board.cancelPlay();
+    });
+
+    $('#reset-btn').on('click', function () {
+        board.resetBoard();
+        board.changePlayer(1);
+    });
 
     //------------functions-------------//
     function startPoint(col, row) {
@@ -285,18 +328,6 @@ $.fn.puissance4 = function (options) {
         result.push(rightStartPoint);
         return result;
     }
-
-
-    var player1 = new player(settings.P1name, colorP1);
-    var player2 = new player(settings.P2name, colorP2);
-
-    var board = new gameBoard(gridX, gridY, player1);
-
-    board.createBoard(this);
-
-    $('.scoreboard').on('click', function () {
-        board.cancelPlay();
-    });
 
     return this;
 };
