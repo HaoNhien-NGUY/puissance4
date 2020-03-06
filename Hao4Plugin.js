@@ -124,12 +124,18 @@ $.fn.puissance4 = function (options) {
                 this.array.push([]);
                 $(gamediv).append(col.attr('class', 'col'));
 
+                var clickDisabled = false;
                 col.on('click', function () {
+                    if (clickDisabled)
+                        return;
                     board.currentPLayer.addPon(i);
                     if (settings.ai) {
                         setTimeout(() => {
                             board.currentPLayer.calculateCol();
                         }, 500);
+
+                        clickDisabled = true;
+                        setTimeout(function () { clickDisabled = false; }, 900);
                     }
                 });
 
