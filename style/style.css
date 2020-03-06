@@ -50,6 +50,20 @@ body {
     cursor: pointer;
 }
 
+/* .row {
+    height: 80px;
+    width: 80px;
+    display: block;
+    font-size: 3rem;
+    border-radius: 50%;
+    border: solid black 2px;
+    margin: 6px 4px;
+    background-color: white;
+    transition: transform 0.4s;
+    transition-timing-function: ease-in;
+    opacity: 0;
+} */
+
 .row {
     height: 80px;
     width: 80px;
@@ -58,6 +72,15 @@ body {
     border-radius: 50%;
     border: solid black 2px;
     margin: 6px 4px;
+    background-color: white;
+}
+
+.pawn {
+    height: 80px;
+    width: 80px;
+    display: block;
+    font-size: 3rem;
+    border-radius: 50%;
     background-color: white;
     transition: transform 0.4s;
     transition-timing-function: ease-in;

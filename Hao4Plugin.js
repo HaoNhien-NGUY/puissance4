@@ -119,8 +119,10 @@ $.fn.puissance4 = function (options) {
 
                 for (var y = this.gridY - 1; y >= 0; y--) {
                     var row = $('<div>');
-                    this.array[i].push(new boardCell(i, y, row, 0, ((this.gridY - y) * (-90))));
-                    col.append(row.attr('class', 'row').css('transform', 'translateY(' + ((this.gridY - y) * (-90)) + 'px)').text(''));
+                    var pawn = $('<div>');
+                    this.array[i].push(new boardCell(i, y, pawn, 0, ((this.gridY - y) * (-90))));
+                    col.append(row.attr('class', 'row'));
+                    row.append(pawn.attr('class', 'pawn').css('transform', 'translateY(' + ((this.gridY - y) * (-90)) + 'px)').text(''));
                 }
                 this.array[i].reverse();
                 borderboard.append(col);
