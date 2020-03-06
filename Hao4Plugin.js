@@ -40,7 +40,7 @@ jQuery(document).ready(function () {
 
 $.fn.puissance4 = function (options) {
     let settings = $.extend({
-        P1name: 'Player 1',
+        P1name: 'PEPEGA',
         P2name: 'Player 2',
         colors: ['red', 'yellow'],
         gridX: 7,
@@ -130,6 +130,7 @@ $.fn.puissance4 = function (options) {
                         return;
                     board.currentPLayer.addPon(i);
                     if (settings.ai) {
+                        PHcol.removeClass('active');
                         setTimeout(() => {
                             board.currentPLayer.calculateCol();
                         }, 500);
@@ -140,6 +141,8 @@ $.fn.puissance4 = function (options) {
                 });
 
                 col.on('mouseover', function () {
+                    if (clickDisabled)
+                        return;
                     PHcol.addClass('active');
                     $(this).on('mouseout', function () {
                         PHcol.removeClass('active');
@@ -266,8 +269,8 @@ $.fn.puissance4 = function (options) {
         changeState(state) {
             this.state = state;
             if (state == 0) {
-                this.cell.remove('minglee').removeClass('pepega');
-                this.cell.css({ "transform": "translateY(" + this.translateY + "px)", "opacity": "0" });
+                this.cell.removeClass('minglee').removeClass('pepega');
+                this.cell.css({ "transform": "translateY(" + this.translateY + "px)", "opacity": "0" , "transition" : "transform 0.4s ease-in"});
             }
             else if (state == 1) {
                 this.cell.addClass('pepega').removeClass('minglee');
@@ -292,6 +295,12 @@ $.fn.puissance4 = function (options) {
 
         animate(col, row, player) {
             board.array[col][row].cell.css({ "transform": "translateY(0px)", "opacity": "1" });
+            setTimeout(() => {
+                board.array[col][row].cell.css({ "transform": "translateY(-6px)", "transition": "transform 0.1s ease-out" });
+                setTimeout(() => {
+                    board.array[col][row].cell.css({ "transform": "translateY(0px)"});
+                }, 110);
+            }, 460);
             board.array[col][row].changeState(player.id);
         }
     }
