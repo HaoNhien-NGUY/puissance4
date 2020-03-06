@@ -22,6 +22,7 @@ jQuery(document).ready(function () {
     });
     $('#btn-1-player').on('click', function () {
         settings.ai = 1;
+        $('#gamesection').css('display', 'flex');
         $('#game-area').puissance4(settings);
         $('#welcome-page').slideToggle();
     });
@@ -34,6 +35,7 @@ jQuery(document).ready(function () {
         $('#main-menu').toggle();
         $('#game-settings').toggle();
     });
+
 });
 
 $.fn.puissance4 = function (options) {
@@ -156,11 +158,11 @@ $.fn.puissance4 = function (options) {
         changePlayer() {
             if (this.currentPLayer == player1) {
                 this.currentPLayer = player2;
-                $('.phcol').css('background-color', colorP2);//.addClass('minglee').removeClass('pepega');
+                $('.phcol').css('background-color', colorP2);
                 this.display.showCurrentPlayer(this.currentPLayer);
             } else {
                 this.currentPLayer = player1;
-                $('.phcol').css('background-color', colorP1);//.addClass('pepega').removeClass('minglee');
+                $('.phcol').css('background-color', colorP1);
                 this.display.showCurrentPlayer(this.currentPLayer);
             }
         }
@@ -187,6 +189,7 @@ $.fn.puissance4 = function (options) {
                 player.score++;
                 this.display.updateScore(player);
                 this.resetBoard();
+                return true;
             }
             if (row == (this.gridY - 1)) {
                 for (let i = 0; i < (this.gridY); i++) {
