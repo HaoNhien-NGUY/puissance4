@@ -1,10 +1,32 @@
 jQuery(document).ready(function () {
 
-    $('#game-area').puissance4();
+    settings = {};
+
+    $('#settings-p1name').on('click', function () {
+        $(this).val('');
+    })
+    $('#settings-p2name').on('click', function () {
+        $(this).val('');
+    })
+    $('#settings-save').on('click', function () {
+        settings = {
+            P1name: $('#settings-p1name').val(),
+            P2name: $('#settings-p2name').val(),
+            colors: [$("#settings-p1color option:selected").val(), $("#settings-p2color option:selected").val()],
+            gridX: $('#settings-cols').val(),
+            gridY: $('#settings-rows').val()
+        }
+    });
+    $('#settings-save').on('click', function () {
+        $('#game-area').puissance4(settings);
+        $('#welcome-page').slideToggle();
+    });
 });
 
 $.fn.puissance4 = function (options) {
     let settings = $.extend({
+        P1name: 'Player 1',
+        P2name: 'Player 2',
         colors: ['red', 'yellow'],
         gridX: 7,
         gridY: 6
@@ -37,19 +59,20 @@ $.fn.puissance4 = function (options) {
             this.name = name;
             this.color = color;
             this.id = playerID++;
+            this.score = 0;
         }
 
-        addPon(col) {
+        addPon(col, PHcol) {
             let i = 0;
-            // console.log(col);
-            while (board.array[col][i].state != 0) {
+            while (typeof board.array[col][i] !== 'undefined' && board.array[col][i].state != 0) {
                 i++;
             }
-            board.array[col][i].changeState(this.id);
-            board.horizontalCheck(i, this.id);
-            board.verticalCheck(col, i, this.id);
-            board.diagonalCheck(col, i, this.id);
-            board.changePlayer();
+            if (i != (board.gridY)) {
+                board.display.animate(col, i, this);
+                // board.array[col][i].changeState(this.id);
+                board.winCheck(col, i, this);
+                board.changePlayer();
+            }
         }
     };
 
@@ -61,85 +84,178 @@ $.fn.puissance4 = function (options) {
             this.gridY = gridY;
             this.currentPLayer = player;
             this.array = [];
+            this.display = new display();
+            this.playhistory = 0;
         }
 
         createBoard(gamediv) {
-            for (var i = 0; i < this.gridX; i++) {
+            $(gamediv).append('<div class="scoreboard"><div id="currentplayer" style="color:' + colorP1 + ';"><b>' + settings.P1name + '</b> \'s turn.</div></div>');
+            $(gamediv).append('<div id="placeholder"></div>');
+            $(gamediv).append('<div id="borderboard">');
+            let borderboard = $('#borderboard');
+            let placeholder = $('#placeholder');
+            $('#P1name').text(settings.P1name + " : ").css('color', colorP1);
+            $('#P2name').text(settings.P2name + " : ").css('color', colorP2);
+            $('#P1score').text('0');
+            $('#P2score').text('0');
+
+            for (let i = 0; i < this.gridX; i++) {
                 var col = $('<div>');
+                let PHcol = $('<div class="phcol">');
+                placeholder.append(PHcol);
                 this.array.push([]);
-                $(gamediv).append(col.attr('id', i).attr('class', 'col'));
+                $(gamediv).append(col.attr('class', 'col'));
+
                 col.on('click', function () {
-                    board.currentPLayer.addPon($(this).attr('id'));
+                    board.currentPLayer.addPon(i);
+                });
+
+                col.on('mouseover', function () {
+                    PHcol.addClass('active');
+                    $(this).on('mouseout', function () {
+                        PHcol.removeClass('active');
+                    })
                 });
 
                 for (var y = this.gridY - 1; y >= 0; y--) {
                     var row = $('<div>');
-                    this.array[i].push(new boardCell(i, y, row, 0));
-                    col.append(row.attr('class', 'row ' + y).text(''));
+                    this.array[i].push(new boardCell(i, y, row, 0, ((this.gridY - y) * (-90))));
+                    col.append(row.attr('class', 'row').css('transform', 'translateY(' + ((this.gridY - y) * (-90)) + 'px)').text(''));
                 }
                 this.array[i].reverse();
+                borderboard.append(col);
             }
+
+            $('.phcol').css('background-color', colorP1);
         }
 
         changePlayer() {
             if (this.currentPLayer == player1) {
                 this.currentPLayer = player2;
+                $('.phcol').css('background-color', colorP2).addClass('minglee').removeClass('pepega');
+                this.display.showCurrentPlayer(this.currentPLayer);
             } else {
                 this.currentPLayer = player1;
+                $('.phcol').css('background-color', colorP1).addClass('pepega').removeClass('minglee');
+                this.display.showCurrentPlayer(this.currentPLayer);
+            }
+        }
+
+        resetBoard() {
+            this.array.forEach(column => {
+                column.forEach(element => {
+                    element.changeState(0);
+                })
+            });
+        }
+
+        cancelPlay() {
+            if (this.playhistory != 0) {
+                this.playhistory.changeState(0);
+                this.playhistory = 0;
+                this.changePlayer();
+            }
+        }
+
+        winCheck(col, row, player) {
+            if (this.horizontalCheck(row, player) || this.verticalCheck(col, row, player) || this.diagonalCheck(col, row, player)) {
+                alert(player.name + " WINS !");
+                player.score++;
+                this.display.updateScore(player);
+                this.resetBoard();
             }
         }
 
         horizontalCheck(row, player) {
             for (let i = 0; i < this.gridX - 3; i++) {
-                if (this.array[i][row].state == player && this.array[i + 1][row].state == player && this.array[i + 2][row].state == player && this.array[i + 3][row].state == player) {
-                    alert('Player ' + player + ' wins');
+                if (this.array[i][row].state == player.id && this.array[i + 1][row].state == player.id && this.array[i + 2][row].state == player.id && this.array[i + 3][row].state == player.id) {
+                    return true;
                 }
             }
+            return false;
         }
 
         verticalCheck(col, row, player) {
             if (row > 2) {
-                if (this.array[col][row].state == player && this.array[col][row - 1].state == player && this.array[col][row - 2].state == player && this.array[col][row - 3].state == player) {
-                    alert('Player ' + player + ' wins');
+                if (this.array[col][row].state == player.id && this.array[col][row - 1].state == player.id && this.array[col][row - 2].state == player.id && this.array[col][row - 3].state == player.id) {
+                    return true;
                 }
             }
+            return false;
         }
 
-        diagonalCheck(col ,row, player) { 
+        diagonalCheck(col, row, player) {
             let startLeft = startPoint(col, row)[0];
             let startRight = startPoint(col, row)[1];
-            
-            for (let i = startLeft[0]; i < this.gridX - 3; i++) {
-                if(this.array[i][startLeft[1]].state == player && this.array[i+1][startLeft[1]+1].state == player && this.array[i+2][startLeft[1]+2].state == player && this.array[i+3][startLeft[1]+3].state == player){
-                    alert('Player '+player+' wins');
+
+            if (startLeft[0] < (this.gridX - 3) && (startLeft[1] + 3) < (this.gridY)) {
+                let y = startLeft[1];
+                for (let i = startLeft[0]; i < (this.gridX - 3) && (y + 3 < this.gridY); i++) {
+                    if (this.array[i][y].state == player.id && this.array[i + 1][y + 1].state == player.id && this.array[i + 2][y + 2].state == player.id && this.array[i + 3][y + 3].state == player.id) {
+                        return true;
+                    }
+                    y++;
                 }
             }
 
-            for (let i = startRight[0]; i > 2; i--) {
-                if(this.array[i][startRight[1]].state == player && this.array[i-1][startRight[1]+1].state == player && this.array[i-2][startRight[1]+2].state == player && this.array[i-3][startRight[1]+3].state == player){
-                    alert('Player '+player+' wins');
+            if (startRight[0] > 2 && (startRight[1] + 3) < (this.gridY)) {
+                let y = startRight[1];
+                for (let i = startRight[0]; i > 2 && (y + 3) < (this.gridY); i--) {
+
+                    if (this.array[i][y].state == player.id && this.array[i - 1][y + 1].state == player.id && this.array[i - 2][y + 2].state == player.id && this.array[i - 3][y + 3].state == player.id) {
+                        return true;
+                    }
+                    y++;
                 }
             }
+            return false;
         }
     }
 
     //----------boardcell ------------//
     class boardCell {
-        constructor(x, y, cell, state) {
+        constructor(x, y, cell, state, offset) {
             this.x = x;
             this.y = y;
             this.state = state;
             this.cell = cell;
+            this.translateY = offset;
         }
 
         changeState(state) {
             this.state = state;
-            if (state == 1) {
-                this.cell.addClass('pepega');
+            if (state == 0) {
+                this.cell.remove('minglee').removeClass('pepega');
+                this.cell.css({"transform": "translateY("+this.translateY+"px)", "opacity": "0"});
+                //.css('transform', 'translateY('++'px);
+            }
+            else if (state == 1) {
+                this.cell.addClass('pepega').removeClass('minglee');
                 this.cell.css('background-color', colorP1);
             } else {
+                this.cell.addClass('minglee').removeClass('pepega');
                 this.cell.css('background-color', colorP2);
             }
+            board.playhistory = this;
+        }
+
+
+    }
+
+    //------------display----------------//
+    class display {
+        updateScore(player) {
+            $('#P' + player.id + 'score').text(player.score);
+        }
+
+        showCurrentPlayer(player) {
+            $('#currentplayer').html("<b>" + player.name + "</b> 's turn.").css('color', player.color);
+
+        }
+
+        animate(col, row, player) {
+            board.array[col][row].cell.css({"transform": "translateY(0px)", "opacity": "1"});
+            board.array[col][row].changeState(player.id);
         }
     }
 
@@ -169,12 +285,16 @@ $.fn.puissance4 = function (options) {
     }
 
 
-    var player1 = new player('player1', colorP1);
-    var player2 = new player('player2', colorP2);
+    var player1 = new player(settings.P1name, colorP1);
+    var player2 = new player(settings.P2name, colorP2);
 
     var board = new gameBoard(gridX, gridY, player1);
 
     board.createBoard(this);
+
+    $('.scoreboard').on('click', function () {
+        board.cancelPlay();
+    });
 
     return this;
 };

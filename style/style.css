@@ -1,0 +1,123 @@
+body {
+    background-color: lightblue;
+    background-image: url('./../img/background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0;
+}
+
+#welcome-page {
+    height: 100vh;
+    background-image: url('./../img/516293.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#game-title {
+    margin-top: 0;
+    text-align: center;
+    color: #4aff3b;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 3.8rem;
+    text-shadow: rgb(0, 0, 0) 1px 0 20px;
+    padding-top: 60px;
+}
+
+.setting-form{
+    background-color: rgba(0, 0, 0, 0.849);
+    width: 30%;
+    margin: 0 auto;
+    color: white;
+}
+
+#borderboard {
+    padding: 15px;
+    /* background-color: slateblue; */
+    background-color: #757575;
+    border-radius: 20px;
+}
+
+.col {
+    display: inline-block;
+    background-color: #757575;
+    /* background-color: slateblue; */
+    border-radius: 15px;
+}
+
+.col:hover {
+    background-color: #4b4b4b;
+    ;
+    cursor: pointer;
+}
+
+.row {
+    height: 80px;
+    width: 80px;
+    display: block;
+    font-size: 3rem;
+    border-radius: 50%;
+    border: solid black 2px;
+    margin: 6px 4px;
+    background-color: white;
+    transition: transform 0.4s;
+    transition-timing-function: ease-in;
+    opacity: 0;
+}
+
+#placeholder {
+    display: flex;
+    padding: 0 15px;
+    /* border: 1px solid black; */
+}
+
+
+.phcol {
+    opacity: 0;
+    border: solid black 2px;
+    border-radius: 50%;
+    height: 80px;
+    width: 80px;
+    margin: 4px 4px;
+}
+
+.active {
+    opacity: 1;
+}
+
+.pepega {
+    background-image: url('./../img/pepega.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.minglee {
+    background-image: url('./../img/minglee.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.scoreboard {
+    text-align: center;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.backborder{
+    background-color: slategrey;
+}
+
+#currentplayer {
+    margin: 0 auto;
+    font-size: 1.6rem;
+    font-family: 'Press Start 2P', cursive;
+    /* text-shadow: 2px 2px 8px rgb(99, 99, 99); */
+    text-shadow: 2px 2px 4px slateblue;
+}
+
+.pscore {
+    width: 30%;
+    font-size: 2.2rem;
+    /* font-family: 'Muli', sans-serif; */
+    font-family: 'Press Start 2P', cursive;
+    color: white;
+}
