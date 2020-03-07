@@ -9,16 +9,13 @@ jQuery(document).ready(function () {
         $(this).val('');
     });
     $('#settings-save').on('click', function () {
-        settings = {
-            P1name: $('#settings-p1name').val(),
-            P2name: $('#settings-p2name').val(),
-            colors: [$("#settings-p1color option:selected").val(), $("#settings-p2color option:selected").val()],
-            gridX: $('#settings-cols').val(),
-            gridY: $('#settings-rows').val()
-        }
+        settings.P1name = $('#settings-p1name').val();
+        settings.P2name = $('#settings-p2name').val();
+        settings.colors = [$("#settings-p1color option:selected").val(), $("#settings-p2color option:selected").val()];
+        settings.gridX = $('#settings-cols').val();
+        settings.gridY = $('#settings-rows').val();
         $('#game-settings').toggle();
         $('#main-menu').toggle();
-
     });
     $('#btn-1-player').on('click', function () {
         settings.ai = 1;
@@ -35,17 +32,33 @@ jQuery(document).ready(function () {
         $('#main-menu').toggle();
         $('#game-settings').toggle();
     });
+    $('.p1').on('click', function(){
+        $('.p1').css('border', 'solid 1px black');
+        $(this).css('border', 'solid 1px rgb(235, 235, 235)');
+        settings.P1img = $(this).attr('id');
+    });
+    $('.p2').on('click', function(){
+        $('.p2').css('border', 'solid 1px black');
+        $(this).css('border', 'solid 1px rgb(235, 235, 235)');
+        settings.P2img = $(this).attr('id');
+    });
 
 });
 
 $.fn.puissance4 = function (options) {
     let settings = $.extend({
         P1name: 'PEPEGA',
-        P2name: 'Player 2',
+        P2name: 'AYAYA',
         colors: ['red', 'yellow'],
         gridX: 7,
-        gridY: 6
+        gridY: 6,
+        P1img: 'pepega',
+        P2img: 'ayaya'
     }, options);
+
+
+    $('.p1img').addClass(settings.P1img);
+    $('.p2img').addClass(settings.P2img);
 
     if (settings.colors[0] == settings.colors[1]) {
         colorP1 = 'red';
@@ -55,8 +68,8 @@ $.fn.puissance4 = function (options) {
         colorP2 = settings.colors[1];
     }
 
-    if (settings.gridX < 4) {
-        gridX = 4;
+    if (settings.gridX < 5) {
+        gridX = 5;
     }
     else {
         gridX = settings.gridX;
@@ -201,7 +214,7 @@ $.fn.puissance4 = function (options) {
                 return true;
             }
             if (row == (this.gridY - 1)) {
-                for (let i = 0; i < (this.gridY); i++) {
+                for (let i = 0; i < (this.gridX); i++) {
                     if (this.array[i][row].state == 0) {
                         return false;
                     }
@@ -269,14 +282,14 @@ $.fn.puissance4 = function (options) {
         changeState(state) {
             this.state = state;
             if (state == 0) {
-                this.cell.removeClass('minglee').removeClass('pepega');
+                this.cell.removeClass(settings.P2img).removeClass(settings.P1img);
                 this.cell.css({ "transform": "translateY(" + this.translateY + "px)", "opacity": "0", "transition": "transform 0.4s ease-in" });
             }
             else if (state == 1) {
-                this.cell.addClass('pepega').removeClass('minglee');
+                this.cell.addClass(settings.P1img).removeClass(settings.P2img);
                 this.cell.css('background-color', colorP1);
             } else {
-                this.cell.addClass('minglee').removeClass('pepega');
+                this.cell.addClass(settings.P2img).removeClass(settings.P1img);
                 this.cell.css('background-color', colorP2);
             }
             board.playhistory = this;

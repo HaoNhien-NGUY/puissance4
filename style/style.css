@@ -4,11 +4,10 @@ body {
     /* background-repeat: no-repeat; */
     /* background-size: cover; */
     margin: 0;
-    overflow: hidden;
 }
 
 #welcome-page {
-    height: 100vh;
+    height: 130vh;
     background-image: url('./../img/516293.jpg');
     /* background-repeat: no-repeat; */
     background-size: 80%;
@@ -29,7 +28,7 @@ body {
     width: 25%;
     margin: 0 auto;
     color: white;
-    top: 80px;
+    top: 50px;
     position: relative;
     border-radius: 10px;
     transition: 0.2s;
@@ -137,6 +136,62 @@ body {
     background-size: 100% 100%;
 }
 
+.gabenget {
+    background-image: url('./../img/gabenget.gif');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.ayaya {
+    background-image: url('./../img/AYAYA.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.forsensmug {
+    background-image: url('./../img/forsenSmug.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.forsencd {
+    background-image: url('./../img/forsenCD.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.forsen1 {
+    background-image: url('./../img/forsen1.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.omegalul {
+    background-image: url('./../img/OMEGALUL.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.imgselect {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 20px;
+}
+
+.pimg {
+    margin: 5px;
+    height: 80px;
+    width: 80px;
+    border: solid 1px black;
+    border-radius: 30%;
+    cursor: pointer;
+}
+
+.pimg:hover {
+    border: solid 1px rgb(235, 235, 235);
+}
+
 .p1img, .p2img {
     height: 160px;
     width: 160px;
@@ -144,7 +199,7 @@ body {
     margin-top: 35px;
     margin-left: 50px;
     border: solid 1px black;
-    border-radius: 50%;
+    border-radius: 10%;
     background-color: rgb(141, 141, 141);
 }
 
