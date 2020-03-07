@@ -32,12 +32,12 @@ jQuery(document).ready(function () {
         $('#main-menu').toggle();
         $('#game-settings').toggle();
     });
-    $('.p1').on('click', function(){
+    $('.p1').on('click', function () {
         $('.p1').css('border', 'solid 1px black');
         $(this).css('border', 'solid 1px rgb(235, 235, 235)');
         settings.P1img = $(this).attr('id');
     });
-    $('.p2').on('click', function(){
+    $('.p2').on('click', function () {
         $('.p2').css('border', 'solid 1px black');
         $(this).css('border', 'solid 1px rgb(235, 235, 235)');
         settings.P2img = $(this).attr('id');
@@ -88,6 +88,7 @@ $.fn.puissance4 = function (options) {
             this.color = color;
             this.id = playerID++;
             this.score = 0;
+            this.lastplayed = [0,0];
         }
 
         addPon(col) {
@@ -97,13 +98,28 @@ $.fn.puissance4 = function (options) {
             }
             if (i != (board.gridY)) {
                 board.display.animate(col, i, this);
+                this.lastplayed = [col, i];
                 board.winCheck(col, i, this);
                 board.changePlayer();
             }
         }
 
         calculateCol() {
-            this.addPon(Math.floor(Math.random() * (board.gridX - 1)));
+            let horizblck = horizontalblock(board.playhistory.y, board.playhistory.state);
+            let horiwin = horizontalblock(this.lastplayed[1], this.id);
+            if(horiwin !== false){
+                this.addPon(horiwin);
+            }
+            else if(verticalblock(this.lastplayed[0], this.lastplayed[1], this.id) !== false){
+                this.addPon(this.lastplayed[0]);
+            }
+            else if(horizblck !== false){
+                this.addPon(horizblck);
+            }else if(verticalblock(board.playhistory.x, board.playhistory.y, board.playhistory.state) !== false){
+                this.addPon(board.playhistory.x);
+            }else{
+                this.addPon(Math.floor(Math.random() * (board.gridX - 1)));
+            }
         }
     };
 
@@ -310,7 +326,7 @@ $.fn.puissance4 = function (options) {
             board.array[col][row].changeState(player.id);
             board.array[col][row].cell.css({ "transform": "translateY(0px)", "opacity": "1" });
             board.array[col][row].cell.on("transitionend", function () {
-                $(this).css({ "transform": "translateY(-6px)", "transition": "transform 0.1s ease" });
+                $(this).css({ "transform": "translateY(-7px)", "transition": "transform 0.1s ease" });
                 $(this).unbind("transitionend");
                 $(this).on("transitionend", function () {
                     board.array[col][row].cell.css({ "transform": "translateY(0px)" });
@@ -338,6 +354,35 @@ $.fn.puissance4 = function (options) {
     });
 
     //------------functions-------------//
+    function horizontalblock(row, watstate) {
+        let pos;
+        for (let i = 0; i < board.gridX - 3; i++) {
+            let combo = 0;
+            let plusone = 0;
+            for(let y = 0; y < 4; y++){
+                if(board.array[i+y][row].state == watstate){
+                    combo++;
+                }else if(board.array[i+y][row].state == 0){
+                    pos = i+y;
+                    plusone++;
+                }
+            }
+            if(combo == 3 && plusone == 1){
+                return pos;
+            }
+        }
+        return false;
+    }
+
+    function verticalblock(col, row, state){
+        if (row >= 2) {
+            if (board.array[col][row].state == state && board.array[col][row - 1].state == state && board.array[col][row - 2].state == state) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     function startPoint(col, row) {
         let leftStartPoint = [];
         let rightStartPoint = [];
