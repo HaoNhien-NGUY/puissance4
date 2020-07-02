@@ -221,8 +221,18 @@ $.fn.puissance4 = function (options) {
             }
         }
 
-        winCheck(col, row, player) {
+        async winCheck(col, row, player) {
             if (this.horizontalCheck(row, player) || this.verticalCheck(col, row, player) || this.diagonalCheck(col, row, player)) {
+                function winnerAlert() {
+                    var promise = new Promise(function(resolve, reject) {
+                      setTimeout(function() {
+                        resolve(true);
+                      }, 600);
+                    });
+                    return promise;
+                }
+
+                await winnerAlert();
                 alert(player.name + " WINS !");
                 player.score++;
                 this.display.updateScore(player);
