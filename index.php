@@ -1,2 +1,2 @@
 <?php
-include_once('./puissance4.php');
+include_once('./puissance4.html');
