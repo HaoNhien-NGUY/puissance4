@@ -24,6 +24,7 @@ jQuery(document).ready(function () {
         $('#welcome-page').slideToggle();
     });
     $('#btn-2-player').on('click', function () {
+        $('#gamesection').css('display', 'flex');
         $('#game-area').puissance4(settings);
         $('#welcome-page').slideToggle();
     });
@@ -189,6 +190,7 @@ $.fn.puissance4 = function (options) {
                 borderboard.append(col);
             }
             $(gamediv).append('<button id="reset-btn">Reset / Change player</button>');
+            $(gamediv).append('<button id="home-btn" style="margin-top:10px;">HOME</button>');
 
             $('.phcol').css('background-color', colorP1);//.addClass('pepega');
         }
@@ -362,6 +364,15 @@ $.fn.puissance4 = function (options) {
         board.resetBoard();
         board.changePlayer(1);
     });
+
+    $('#home-btn').on('click', function () {
+        $('#welcome-page').slideToggle();
+        setTimeout(() => {
+            $('#gamesection').css('display', 'none');
+            $('#game-area').empty();
+        }, 500);
+    });
+
 
     //------------functions-------------//
     function horizontalblock(row, watstate) {

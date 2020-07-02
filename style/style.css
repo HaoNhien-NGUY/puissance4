@@ -4,10 +4,11 @@ body {
     /* background-repeat: no-repeat; */
     /* background-size: cover; */
     margin: 0;
+    /* overflow: hidden; */
 }
 
 #welcome-page {
-    height: 130vh;
+    height: 100vh;
     background-image: url('./../img/516293.jpg');
     /* background-repeat: no-repeat; */
     background-size: 80%;
@@ -240,23 +241,28 @@ body {
     padding: 3px 5px;
 }
 
-#reset-btn {
+#reset-btn, #home-btn {
+    border: solid white 1px;
     display: block;
-    margin: 30px auto;
+    margin: 30px auto 0px;
     width: 250px;
     height: 40px;
     background-color: black;
-    border: none;
+    /* border: none; */
     color: white;
     cursor: pointer;
     transition: 0.2s;
     position: relative;
 }
 
-#reset-btn:hover {
+#reset-btn:hover, #home-btn:hover {
     transition: 0.2s;
     top: -2px;
     left: -1px;
+}
+
+#home-btn:hover {
+    margin: 10px auto;
 }
 
 #game-settings h3 {
