@@ -229,15 +229,15 @@ $.fn.puissance4 = function (options) {
                     var promise = new Promise(function(resolve, reject) {
                       setTimeout(function() {
                         resolve(true);
-                      }, 600);
+                      }, 400);
                     });
                     return promise;
                 }
 
-                await winnerAlert();
-                alert(player.name + " WINS !");
                 player.score++;
                 this.display.updateScore(player);
+                await winnerAlert();
+                alert(player.name + " WINS !");
                 this.resetBoard();
                 return true;
             }
@@ -370,6 +370,7 @@ $.fn.puissance4 = function (options) {
         setTimeout(() => {
             $('#gamesection').css('display', 'none');
             $('#game-area').empty();
+            document.location.reload();
         }, 500);
     });
 
