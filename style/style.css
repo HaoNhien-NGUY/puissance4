@@ -1,0 +1,305 @@
+body {
+    background-color: lightblue;
+    background-image: url('./../img/Grid_illusion.webp');
+    /* background-repeat: no-repeat; */
+    /* background-size: cover; */
+    margin: 0;
+    /* overflow: hidden; */
+}
+
+#welcome-page {
+    height: 100vh;
+    background-image: url('./../img/516293.jpg');
+    /* background-repeat: no-repeat; */
+    background-size: 80%;
+}
+
+#game-title {
+    margin-top: 0;
+    text-align: center;
+    color: #4aff3b;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 3.8rem;
+    text-shadow: rgb(0, 0, 0) 1px 0 20px;
+    padding-top: 70px;
+}
+
+.setting-form {
+    background-color: rgba(0, 0, 0, 0.849);
+    width: 25%;
+    margin: 0 auto;
+    color: white;
+    top: 50px;
+    position: relative;
+    border-radius: 10px;
+    transition: 0.2s;
+}
+
+.main-btn {
+    padding: 30px;
+}
+
+.main-btn button {
+    height: 60px;
+    display: block;
+    width: 50%;
+    margin: 20px auto;
+    cursor: pointer;
+    background-color: #4aff3b;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Press Start 2P', cursive;
+    color: white;
+    transition: 0.2s;
+}
+
+.main-btn button:hover {
+    background-color: #3dc731;
+    transition: 0.2s;
+}
+
+#borderboard {
+    padding: 0 15px;
+    /* background-color: #757575; */
+    background-color: rgb(36, 36, 36);
+    border-radius: 20px;
+}
+
+.col {
+    padding: 15px 0;
+    display: inline-block;
+    /* background-color: #757575; */
+    background-color: rgb(36, 36, 36);
+    border-radius: 15px;
+}
+
+.col:hover {
+    background-color: #4b4b4b;
+    ;
+    cursor: pointer;
+}
+
+.row {
+    height: 80px;
+    width: 80px;
+    display: block;
+    font-size: 3rem;
+    border-radius: 50%;
+    border: solid black 2px;
+    margin: 6px 4px;
+    background-color: #e1e1e1;
+}
+
+.pawn {
+    height: 80px;
+    width: 80px;
+    display: block;
+    font-size: 3rem;
+    border-radius: 50%;
+    background-color: white;
+    transition: transform 0.4s;
+    transition-timing-function: ease-in;
+    opacity: 0;
+    position: relative;
+}
+
+#placeholder {
+    display: flex;
+    padding: 0 15px;
+    /* border: 1px solid black; */
+}
+
+.phcol {
+    opacity: 0;
+    border: solid black 2px;
+    border-radius: 50%;
+    height: 80px;
+    width: 80px;
+    margin: 4px 4px;
+    background-image: url('./../img/pepeS.gif');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.active {
+    opacity: 1;
+}
+
+.pepega {
+    background-image: url('./../img/pepega.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.minglee {
+    background-image: url('./../img/minglee.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.gabenget {
+    background-image: url('./../img/gabenget.gif');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.ayaya {
+    background-image: url('./../img/AYAYA.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.forsensmug {
+    background-image: url('./../img/forsenSmug.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.forsencd {
+    background-image: url('./../img/forsenCD.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.forsen1 {
+    background-image: url('./../img/forsen1.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.omegalul {
+    background-image: url('./../img/OMEGALUL.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.imgselect {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 20px;
+}
+
+.pimg {
+    margin: 5px;
+    height: 80px;
+    width: 80px;
+    border: solid 1px black;
+    border-radius: 30%;
+    cursor: pointer;
+}
+
+.pimg:hover {
+    border: solid 1px rgb(235, 235, 235);
+}
+
+.p1img, .p2img {
+    height: 160px;
+    width: 160px;
+    display: block;
+    margin-top: 35px;
+    margin-left: 50px;
+    border: solid 1px black;
+    border-radius: 10%;
+    background-color: rgb(141, 141, 141);
+}
+
+.p2img {
+    margin-left: auto;
+    margin-right: 50px;
+}
+
+.scoreboard {
+    text-align: center;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.backborder {
+    background-color: slategrey;
+}
+
+#currentplayer {
+    margin: 0 auto;
+    font-size: 1.6rem;
+    font-family: 'Press Start 2P', cursive;
+    /* text-shadow: 2px 2px 8px rgb(99, 99, 99); */
+    text-shadow: 2px 2px 4px black;
+    transition: 0.2s;
+}
+
+.pscore {
+    width: 30%;
+    font-size: 2.2rem;
+    /* font-family: 'Muli', sans-serif; */
+    font-family: 'Press Start 2P', cursive;
+    color: white;
+}
+
+.pscore .pname {
+    background-color: black;
+    padding: 3px 5px;
+}
+
+#reset-btn, #home-btn {
+    border: solid white 1px;
+    display: block;
+    margin: 30px auto 0px;
+    width: 250px;
+    height: 40px;
+    background-color: black;
+    /* border: none; */
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+    position: relative;
+}
+
+#reset-btn:hover, #home-btn:hover {
+    transition: 0.2s;
+    top: -2px;
+    left: -1px;
+}
+
+#home-btn:hover {
+    margin: 10px auto;
+}
+
+#game-settings h3 {
+    font-family: 'Press Start 2P', cursive;
+}
+
+.settings-div {
+    display: flex;
+}
+
+.grid-settings {
+    margin: 40px 0;
+    padding-right: 180px;
+}
+
+#game-settings {
+    display: none;
+    padding: 20px;
+}
+
+#game-settings .settings-div input {
+    max-width: 200px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.grid-settings input {
+    width: 50px;
+    margin-left: auto;
+}
+
+#settings-save {
+    display: block;
+    margin: 0 auto;
+}
+
+#P1score, #P2score {
+    background-color: black;
+    padding: 5px;
+}
